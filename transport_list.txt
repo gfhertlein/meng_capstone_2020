@@ -1,4 +1,4 @@
-airplanes
+airplane
 train
 car
 sailboat
