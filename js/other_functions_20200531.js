@@ -605,6 +605,79 @@ function topnsimilar(){
 
 }
 
+function topnsimilar2(){
+	var word = $("#word").val();
+	if (word.charAt(word.length-1) == ' ' || word.charAt(word.length-1) == '\n'){
+		word = word.substring(0, word.length-1);
+	}
+	var loadingModal = document.getElementById('loadingModal');
+
+	if (word.length == 0){
+		alert('No input!');
+		return (0)
+	}
+	word = word.replace(' ', '_');
+	word = word.toLowerCase();
+	$("#loadingModal").modal({
+		      backdrop: "static", //remove ability to close modal with click
+		      keyboard: false, //remove option to close with keyboard
+		      show: false //Display loader!
+		    });
+	$.ajax({
+			url: API_URL_HOST + '/topn',
+			type: "POST",
+			contentType: 'application/json',
+			dataType: 'json',
+			async: true,
+			data: JSON.stringify({"userid":userid, "word": word}),
+			success: function(response) {
+				console.log(response);
+
+				if (response['error']!=null){
+					$('#word2manyResult').html ('Error: The term cannot be found in EKG');
+					setTimeout(function() {$("#loadingModal").modal("hide");}, 500);
+					return (0)
+				}
+				if (response['top20'][0] == 0){
+					$('#word2manyResult').html ('Error: The term cannot be found in EKG');
+					setTimeout(function() {$("#loadingModal").modal("hide");}, 500);
+					return (0)
+				}
+				top20 = response['top20'];
+				var text = "";
+				for (var i = 0; i<9;i++){//top20.length
+					text = text + top20[i][0].replace(/_/g, ' ') + '<br />';
+				}
+                
+                var text2 = "";
+				for (var i = 9; i<18;i++){//top20.length
+					text2 = text2 + top20[i][0].replace(/_/g, ' ') + '<br />';
+				}
+                
+                var text3 = "";
+				for (var i = 18; i<27;i++){//top20.length
+					text3 = text3 + top20[i][0].replace(/_/g, ' ') + '<br />';
+				}
+                
+				console.log(text);
+				$('#word2manyResult').html (text);
+                $('#word2manyResult2').html (text2);
+                $('#word2manyResult3').html (text3);
+				setTimeout(function() {$("#loadingModal").modal("hide");}, 500);
+
+				var timestamp = Date.now();
+				writeLog('topN'+'\t'+timestamp.toString()+'\t'+word+'\n');
+                
+			},
+			error: function() {
+					$('#word2manyResult').html ('Error: The term cannot be found in EKG');
+					setTimeout(function() {$("#loadingModal").modal("hide");}, 500);
+			}
+        
+	});
+
+}
+
 function topNs(word){
 	if (word.length == 0){
 		alert('No input!');

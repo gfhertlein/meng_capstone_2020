@@ -1,52 +1,10 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<script>//New Visitor Judgement
-  window.onload = function(){
-    var newVisitor = isNewVisitor();
-    newVisitor = false; //Delete this line later!
-    if(newVisitor === true)
-    {
-      // Instruction
-      window.location.href="Instruction_start_page.html";
-        console.log("New Visitor!");
-      setCookie("gznotes-visited","true", 5);
-    }
-    else {
-      console.log("Old Visitor!");
-    }
-  };
 
-  function isNewVisitor() {
-    //cookie
-    var flg = getCookie("gznotes-visited");
-    if (flg === "") {
-        return true;
-    } else {
-        return false;
-    }
-  }
-  // cookie
-  function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires +";path=/";
-  }
-  //
-  function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0)==' ') c = c.substring(1);
-      if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
-    }
-    return "";
-  }
-</script>
 <head>
-    <title>Technology Semantic Network</title>
+    
+    <title>TechNet Integration</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="You can use TechNet here">
@@ -66,169 +24,39 @@
     <link href="css/fontawesome.min.css" rel="stylesheet">
     <script src="https://d3js.org/d3.v4.min.js"></script>
 
-
 </head>
+    
 <body onload = "initialize();">
-  <header>
-      <nav class="navbar navbar-expand-sm bg-light navbar-light justify-content-end">
-        <!-- Brand/logo -->
-        <a class="navbar-brand" href="https://idc.sutd.edu.sg/" target="_blank">
-          <img src="resources/IDC.png" alt="IDC logo" class="logo2">
-        </a>
-        <!-- Links -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item ml-auto">
-              <a class="nav-link" href="introduction.html">Home</a>
-            </li>
-            <li class="nav-item ml-auto">
-              <a class="nav-link" href="index_technet.html">Tree Graph Search</a>
-            </li>
-            <li class="nav-item ml-auto">
-              <a class="nav-link" href="other_functions.html">Concept Relevance Measure</a>
-            </li>
-            <li class="nav-item ml-auto">
-              <a class="nav-link" href="https://ddi.sutd.edu.sg/sutd-data-driven-innovation-lab" target="_blank">About Us</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <div class="header-box">
-          <div class="center">
-              <h1 class="header-h1">TechNet: Technology Semantic Network</h1>
-          </div>
-      </div>
-  </header>
 
     <div class = "container-fluid">
+        
         <div class = 'row'>
-          <p class = "graph"><br>Retrieve the relevance score between two terms</p>
-        </div>
-        <div class = 'row'>
-            <div id = "word1Fluid" class = "col-sm-3">
-                <div class="input-group">
-                    <input type = 'text' id = 'word1' class = 'form-control' placeholder="Term#1">
-                </div>
-            </div>
-            <div id = "word2Fluid" class = "col-sm-3">
-                <div class="input-group">
-                    <input type = 'text' id = 'word2' class = 'form-control' placeholder="Term#2">
-                </div>
-            </div>
-            <div id = "word2wordSearchFluid" class = "col-sm-2">
-                <div id = 'searchButtondiv' class="input-group">
-                    <button type = "button" id = 'searchBtn_w2w' class ='btn input-group-append searchBtn' onclick="word2word_similarity()">Search!</button>
-                </div>
-            </div>
-            <div id = 'word2wordResultFluid' class = "col-sm-3" >
-                <div class="input-group">
-                    <textarea id = 'w2wResult' type='text' rows=1 class = 'form-control searchText' disabled ></textarea>
-                </div>
-            </div>
-        </div>
-        <br><br>
-        <div class = 'row'>
-          <p class = "graph">Retrieve the most relevant terms to a given term of interest</p>
+          <p class = "graph">Retrieve the most relevant terms to according to TechNet</p>
         </div>
         <div class='row'>
-            <div id = "wordFluid" class = "col-sm-3">
+            <div id = "wordFluid" class = "col-sm-2">
                 <div class= "input-group" >
                     <input type = 'text' id = 'word' class = 'form-control' placeholder="Term">
                 </div>
             </div>
 
-            <div id = "word2manySearchFluid" class = "col-sm-2">
+            <div id = "word2manySearchFluid" class = "col-sm-1">
                 <div id = 'searchButtonMany' class="input-group">
-                    <button type = "button" id = 'searchBtn_many' class ='btn input-group-append searchBtn' onclick="topnsimilar()">Search!</button>
+                    <button type = "button" id = 'searchBtn_many' class ='btn input-group-append searchBtn' onclick="topnsimilar2()">Search!</button>
                 </div>
             </div>
-            <div id = 'word2manyResultFluid' class = "col-sm-6">
+            <div id = 'word2manyResultFluid' class = "col-sm-3">
                 <p id='word2manyResult'></p>
             </div>
-        </div>
-        <br><br>
-        <div class = 'row'>
-          <p class = "graph">
-            Retrieve of a subgraph of the TechNet that contains the technical terms from a given text, in the form of an adjacency matrix
-          </p>
-        </div>
-        <div class = 'row'>
-            <div class='col-sm-6'>
-                <div class="input-group">
-                    <textarea type = 'text' id = 'para' class = 'form-control' placeholder="Paragraph" cols=20 rows=2 maxlength="1000"
-                    onkeyup="countChar()"></textarea>
-                    <br>
-
-                </div>
-                Characters Left: <span id="charCount"></span>
-                <!-- <div class="clearfix"></div> -->
-                <br>
+            <div id = 'word2manyResultFluid' class = "col-sm-3">
+                <p id='word2manyResult2'></p>
             </div>
-            <div id = "word2manySearchFluid" class = "col-sm-2">
-                <div id = 'searchButtonMany' class="input-group">
-                    <button type = "button" id = 'searchBtn_many' class ='btn input-group-append searchBtn' onclick="getAdjacency()">Calculate & Download!</button>
-                </div>
-            </div>
-
-        </div>
-        <div class = 'row'>
-            <div class = 'col'>
-                <div id = "d3ADJ" class = "panel panel-default">
-                    <p><br>Relevance Matrix</p>
-                    <p>Order:
-                        <select id="order">
-                              <option value="name">by Name</option>
-                              <option value="count">by Frequency</option>
-                              <option value="group">by Cluster</option>
-                        </select>
-                    </p>
-                    <div id="d3ADJ_mtx"></div>
-                </div>
-
-                <!-- <div class="clearfix"></div> -->
-
+            <div id = 'word2manyResultFluid' class = "col-sm-3">
+                <p id='word2manyResult3'></p>
             </div>
         </div>
-        <div class = 'row' hidden>
-            <div class = "col-sm-9">
-                <div id = "term2Tree" class = "panel panel-default">
+        
 
-                    <h4 class = "panel-title">Term Tree</h4>
-
-                    <div class = "panel-rightbody">
-                        <div class = "row">
-                            <div id = "wordTree" class = "col-sm-3">
-
-                                <div class= "input-group" >
-                                    <input type = 'text' id = 'wordTree_Input' class = 'form-control' placeholder="Term">
-                                </div>
-                            </div>
-
-                            <div id = "word2Tree" class = "col-sm-2">
-                                <div id = 'searchButtonTree' class="input-group">
-                                    <button type = "button" id = 'searchBtn_tree' class ='btn input-group-append searchBtn' onclick="getGraph()">Search!</button>
-                                </div>
-                            </div>
-                            <div id = 'word2treeResultFluid' class = "col-sm-6">
-                                <p id='word2treeResult'></p>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="clearfix"></div>
-                    <br>
-
-                </div>
-
-                <div id = "d3Tree" class = "panel panel-default">
-
-
-
-                    <!-- <div class="clearfix"></div> -->
-
-                </div>
-            </div>
-        </div>
     </div>
     <!--LOADING MODAL-->
     <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
