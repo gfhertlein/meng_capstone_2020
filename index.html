@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>Technology Semantic Network</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="You can use TechNet here">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/other_functions.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,600,700,800" rel="stylesheet">
+    <link href="css/fontawesome.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+</head>
+    
+<body onload = "initialize();">
+
+    <div class = "container-fluid">
+        
+        <div class = 'row'>
+          <p class = "graph">Retrieve the most relevant terms to according to TechNet</p>
+        </div>
+        <div class='row'>
+            <div id = "wordFluid" class = "col-sm-3">
+                <div class= "input-group" >
+                    <input type = 'text' id = 'word' class = 'form-control' placeholder="Term">
+                </div>
+            </div>
+
+            <div id = "word2manySearchFluid" class = "col-sm-1">
+                <div id = 'searchButtonMany' class="input-group">
+                    <button type = "button" id = 'searchBtn_many' class ='btn input-group-append searchBtn' onclick="topnsimilar()">Search!</button>
+                </div>
+            </div>
+            <div id = 'word2manyResultFluid' class = "col-sm-4">
+                <p id='word2manyResult'></p>
+            </div>
+            <div id = 'word2manyResultFluid' class = "col-sm-4">
+                <p id='word2manyResult2'></p>
+            </div>
+        </div>
+        
+
+    </div>
+    <!--LOADING MODAL-->
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+            <div class="loader"></div>
+            <div class="loader-txt" >
+              <p>Searching...<br>This might take a while!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--INITIALIZE MODAL-->
+    <div class="modal fade" id="initializeModal" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+            <div class="loader"></div>
+            <div class="loader-txt" >
+              <p>Initializing...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</body>
+<script src ="js/other_functions_20200531.js"></script>
+</html>
